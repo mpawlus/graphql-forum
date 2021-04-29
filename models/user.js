@@ -10,7 +10,8 @@ module.exports = (DataTypes, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Thread);
+      User.hasMany(models.Reply);
     }
   };
   User.init({

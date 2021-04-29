@@ -10,7 +10,9 @@ module.exports = (DataTypes, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Thread.belongsTo(models.User, { foreignKey: 'userId' });
+      Thread.hasMany(models.Reply);
+      Thread.belongsTo(models.Channel, { foreignKey: 'channelId' });
     }
   };
   Thread.init({
