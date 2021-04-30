@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcrypt')
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('graphql-forum', 'root', 'admin', { host: 'localhost', dialect: 'mysql' });
 
@@ -56,5 +57,10 @@ module.exports = (DataTypes, DataTypes2) => {
     sequelize,
     modelName: 'User',
   });
+
+  User.beforeCreate(async (user) => {
+    user.password = await bcrypt.hash(user.password, 10)
+  })
+
   return User;
 };
