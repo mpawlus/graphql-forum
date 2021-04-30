@@ -1,5 +1,6 @@
-const { ApolloError } = require("apollo-server-errors")
-const jwt = require('jsonwebtoken')
+const { ApolloError, AuthenticatorError } = require("apollo-server-errors")
+const bcrypt = require('bcrypt')
+const { generateToken } = require('../utils')
 
 module.exports = {
     Mutation: {
@@ -12,9 +13,23 @@ module.exports = {
 
             const user = await models.User.create({ username, email, password})
 
-            const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" })
+            return { token: generateToken(user) }
+        },
 
-            return { token }
+        async signIn(parent, { email, password }, { models }) {
+            const user = await models.User.findOne({ where: { email } })
+
+            if (!user) {
+                throw new AuthenticatorError("Invalid email/password")
+            }
+
+            const isPasswordValid = await bcrypt.compare(password, user.password)
+
+            if (!isPasswordValid) {
+                throw new AuthenticatorError("Invalid email/password")
+            }
+
+            return { token: generateToken(user) }
         }
     }
 } 
