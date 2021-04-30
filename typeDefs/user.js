@@ -7,8 +7,8 @@ module.exports = gql `
         email: String!
         role: Role!
         avatar: String!
-        createdAt: String!
-        updatedAt: String!
+        createdAt: DateTime!
+        updatedAt: DateTime!
     }
 
     enum Role {

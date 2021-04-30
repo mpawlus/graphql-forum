@@ -10,9 +10,9 @@ module.exports = gql `
         channel: Channel!
         status: ThreadStatus!
         isLocked: Boolean!
-        lastRepliedAt: String!
-        createdAt: String!
-        updatedAt: String!
+        lastRepliedAt: DateTime!
+        createdAt: DateTime!
+        updatedAt: DateTime!
     }
 
     enum ThreadStatus {
