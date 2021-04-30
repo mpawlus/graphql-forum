@@ -1,8 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('DataTypes');
-module.exports = (DataTypes, DataTypes) => {
+
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('graphql-forum', 'root', 'admin', { host: 'localhost', dialect: 'mysql' });
+
+module.exports = (DataTypes, DataTypes2) => {
   class Favorite extends Model {
     /**
      * Helper method for defining associations.
@@ -15,15 +16,15 @@ module.exports = (DataTypes, DataTypes) => {
   };
   Favorite.init({
     replyId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     },    
     userId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     }
   }, {
-    DataTypes,
+    sequelize,
     modelName: 'Favorite',
   });
   Favorite.removeAttribute('id');

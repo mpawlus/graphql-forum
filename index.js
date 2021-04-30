@@ -1,6 +1,8 @@
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express')
 
+const models = require('./models')
+
 const app = express()
 const port = 4000
 
@@ -20,7 +22,8 @@ const resolvers = {
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: { models }
 })
 
 server.applyMiddleware({ app, cors: true })

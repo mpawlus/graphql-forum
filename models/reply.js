@@ -1,12 +1,13 @@
 'use strict';
-const {
-  Model
-} = require('DataTypes');
-module.exports = (DataTypes, DataTypes) => {
+
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('graphql-forum', 'root', 'admin', { host: 'localhost', dialect: 'mysql' });
+
+module.exports = (DataTypes, DataTypes2) => {
   class Reply extends Model {
     /**
      * Helper method for defining associations.
-     * This method is not a part of DataTypes lifecycle.
+     * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
@@ -18,36 +19,36 @@ module.exports = (DataTypes, DataTypes) => {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
     content: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: false
     },
     threadId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     },
     userId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     },
     isBestAnswer: {
-      type: DataTypes.BOOLEAN,
+      type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     }
   }, {
-    DataTypes,
+    sequelize,
     modelName: 'Reply',
   });
   return Reply;

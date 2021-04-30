@@ -1,8 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('DataTypes');
-module.exports = (DataTypes, DataTypes) => {
+
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('graphql-forum', 'root', 'admin', { host: 'localhost', dialect: 'mysql' });
+
+module.exports = (DataTypes, DataTypes2) => {
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -18,41 +19,41 @@ module.exports = (DataTypes, DataTypes) => {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
     email: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       unique: true
     },
     username: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       unique: true
     },
     password: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false
     },
     role: {
-      type: DataTypes.ENUM('ADMIN', 'USER'),
+      type: Sequelize.ENUM('ADMIN', 'USER'),
       allowNull: false,
       defaultValue: 'USER'
     },
     avatar: {
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     }
   }, {
-    DataTypes,
+    sequelize,
     modelName: 'User',
   });
   return User;

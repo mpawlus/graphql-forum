@@ -1,8 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('DataTypes');
-module.exports = (DataTypes, DataTypes) => {
+
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('graphql-forum', 'root', 'admin', { host: 'localhost', dialect: 'mysql' });
+
+module.exports = (DataTypes, DataTypes2) => {
   class Thread extends Model {
     /**
      * Helper method for defining associations.
@@ -19,53 +20,53 @@ module.exports = (DataTypes, DataTypes) => {
     id: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
     title: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false
     },
     slug: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false
     },
     content: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: false
     },
     userId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     },
     channelId: {
-      type: DataTypes.UUID,
+      type: Sequelize.UUID,
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM('UNSOLVED', 'SOLVED'),
+      type: Sequelize.ENUM('UNSOLVED', 'SOLVED'),
       allowNull: false,
       defaultValue: 'UNSOLVED'
     },
     isLocked: {
-      type: DataTypes.BOOLEAN,
+      type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
     lastRepliedAt: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     }
   }, {
-    DataTypes,
+    sequelize,
     modelName: 'Thread',
   });
   return Thread;
